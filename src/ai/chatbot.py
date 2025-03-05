@@ -2,6 +2,8 @@ from langchain_ollama import OllamaLLM
 from typing import Dict, List, Optional
 import json
 import logging
+from .rag_pipeline import RAGPipeline
+from .knowledge_retriever import KnowledgeRetriever
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -16,6 +18,12 @@ class TeacherTrainingChatbot:
             logger.error(f"Failed to initialize Llama model: {str(e)}")
             raise
 
+        # Initialize RAG pipeline with knowledge base integration
+        self.rag_pipeline = RAGPipeline()
+        
+        # Initialize knowledge retriever for direct knowledge access
+        self.knowledge_retriever = KnowledgeRetriever()
+        
         # Educational scenario categories
         self.categories = {
             "classroom_management": {
@@ -72,6 +80,123 @@ class TeacherTrainingChatbot:
 
         # Conversation history for context
         self.conversation_history = []
+
+    async def initialize(self):
+        """Initialize the chatbot components"""
+        await self.rag_pipeline.initialize()
+        logger.info("Chatbot initialization complete")
+        
+        # Log knowledge base status
+        categories = self.knowledge_retriever.get_categories()
+        if categories:
+            logger.info(f"Knowledge base available with categories: {', '.join(categories)}")
+        else:
+            logger.warning("Knowledge base not available or empty")
+            
+    async def generate_response(self, query: str, context: Dict = None) -> Dict:
+        """
+        Generate a response to a user query using the RAG pipeline with knowledge enhancement.
+        
+        Args:
+            query (str): The user's query
+            context (Dict, optional): Additional context for the query
+            
+        Returns:
+            Dict: Response with generated text and sources
+        """
+        try:
+            # Process query through RAG pipeline with knowledge base
+            response = await self.rag_pipeline.process_query(query, context, use_knowledge_base=True)
+            logger.info(f"Generated response for query: {query[:50]}...")
+            return response
+        except Exception as e:
+            logger.error(f"Error generating response: {str(e)}")
+            return {
+                "response": "I'm sorry, I encountered an error while processing your request.",
+                "error": str(e)
+            }
+            
+    async def generate_knowledge_scenario(self, parameters: Dict) -> Dict:
+        """
+        Generate a teaching scenario based on parameters using the knowledge base.
+        
+        Args:
+            parameters (Dict): Parameters for scenario generation
+                (grade_level, subject, challenge_type, etc.)
+                
+        Returns:
+            Dict: Generated scenario with context and sources
+        """
+        try:
+            # Generate scenario through RAG pipeline with knowledge base
+            scenario = await self.rag_pipeline.generate_scenario(parameters)
+            logger.info(f"Generated scenario with parameters: {json.dumps(parameters)}")
+            return scenario
+        except Exception as e:
+            logger.error(f"Error generating scenario: {str(e)}")
+            return {
+                "scenario": "I'm sorry, I encountered an error while generating the scenario.",
+                "error": str(e)
+            }
+            
+    async def evaluate_response(self, scenario_id: str, teacher_response: str) -> Dict:
+        """
+        Evaluate a teacher's response to a scenario.
+        
+        Args:
+            scenario_id (str): The ID of the scenario
+            teacher_response (str): The teacher's response to evaluate
+            
+        Returns:
+            Dict: Evaluation results with feedback and score
+        """
+        try:
+            # Evaluate response through RAG pipeline with knowledge base
+            evaluation = await self.rag_pipeline.evaluate_response(scenario_id, teacher_response)
+            logger.info(f"Evaluated response for scenario {scenario_id}")
+            return evaluation
+        except Exception as e:
+            logger.error(f"Error evaluating response: {str(e)}")
+            return {
+                "evaluation": "I'm sorry, I encountered an error while evaluating the response.",
+                "error": str(e)
+            }
+            
+    def get_knowledge_categories(self) -> List[str]:
+        """
+        Get all available knowledge categories.
+        
+        Returns:
+            List[str]: List of unique category names
+        """
+        return self.knowledge_retriever.get_categories()
+        
+    def search_knowledge(self, query: str, category: Optional[str] = None, top_k: int = 5) -> List[Dict]:
+        """
+        Search the knowledge base for relevant information.
+        
+        Args:
+            query (str): The search query
+            category (str, optional): Filter by knowledge category
+            top_k (int): Number of results to return
+            
+        Returns:
+            List[Dict]: List of knowledge chunks with metadata and similarity scores
+        """
+        return self.knowledge_retriever.search(query, category, top_k)
+        
+    def get_most_effective_knowledge(self, category: Optional[str] = None, limit: int = 10) -> List[Dict]:
+        """
+        Get the most effective knowledge chunks based on usage and effectiveness scores.
+        
+        Args:
+            category (str, optional): Filter by knowledge category
+            limit (int): Maximum number of results to return
+            
+        Returns:
+            List[Dict]: List of knowledge chunks with metadata and effectiveness scores
+        """
+        return self.knowledge_retriever.get_most_effective_knowledge(category, limit)
 
     def generate_scenario(self, category: str, persona: str) -> Dict:
         """Generate a detailed educational scenario"""

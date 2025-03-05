@@ -130,4 +130,71 @@ We welcome contributions! See our [Contributing Guidelines](docs/contributing/RE
 ## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Knowledge Base Integration
+
+The Utah Teacher Training Assistant (UTTA) now integrates with an Educational Knowledge Base containing evidence-based educational content extracted from textbooks and research papers. This knowledge base powers the chatbot's ability to generate and evaluate teacher training scenarios.
+
+### Knowledge Base Structure
+
+The knowledge base is structured as follows:
+
+```
+knowledge_base/
+├── vector_db.sqlite            # Main vector database (17,980 knowledge chunks)
+├── knowledge.db                # Structured behavioral data
+└── books/                      # Source educational materials
+```
+
+The vector database contains nearly 18,000 knowledge chunks categorized into:
+- General Education
+- Classroom Management
+- Teaching Strategies
+- Student Development
+
+### Knowledge Base Location
+
+The knowledge base is located at:
+```
+/home/team1/UTTA-Knowledge-Base-Demo/knowledge_base/vector_db.sqlite
+```
+
+The system is configured to directly access this location.
+
+### Using the Knowledge Base
+
+The knowledge base is integrated with the chatbot through the `KnowledgeRetriever` class, which provides the following functionality:
+
+- Semantic search for relevant educational content
+- Knowledge retrieval for generating scenarios
+- Evidence-based evaluation of teacher responses
+- Tracking of knowledge effectiveness
+
+Example usage:
+
+```python
+from src.ai.knowledge_retriever import KnowledgeRetriever
+
+# Initialize the knowledge retriever
+retriever = KnowledgeRetriever()
+
+# Search for relevant knowledge
+results = retriever.search("classroom management strategies", top_k=3)
+
+# Get knowledge categories
+categories = retriever.get_categories()
+
+# Get most effective knowledge
+effective_knowledge = retriever.get_most_effective_knowledge(limit=5)
+```
+
+### Testing the Knowledge Base Integration
+
+To test the knowledge base integration, run:
+
+```bash
+python tests/test_knowledge_retriever.py
+```
+
+This will verify that the knowledge base is properly connected and functioning.
  
