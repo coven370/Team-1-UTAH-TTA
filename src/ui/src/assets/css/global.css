@@ -1,0 +1,88 @@
+:root {
+    --dark-blue: #031737;
+    --blue: #3963ad;
+    --orange: #ff7300;
+    --quartz: rgb(167, 162, 169);
+    --seasalt: #F4F7F5;
+    --mint: #62A87C;
+    --light-green: #7EE081;
+    --white-green: #C3F3C0;
+    --light-red: #f56c6c;
+    --starting-y: -57%;
+    --starting-scale: 98%;
+}
+
+.see{
+    border: aqua 2px solid;
+}
+
+html, body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: var(--quartz);
+    background-image: url("../../../public/img/19742.png");
+}
+
+h1, h2, h3, h4, h5, h6{
+    padding: 0;
+    margin: 0;
+}
+
+h1{
+    padding: 20px 0;
+}
+
+h6{
+    padding: 15px 0;
+}
+
+.overlay{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .3);
+    z-index: 50;
+}
+
+.popUpContainer{
+    width: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background-color: var(--seasalt);
+    border-radius: 15px;
+    padding: 35px;
+}
+
+.popUp{
+    position: relative;
+    text-align: center;
+}
+
+.closeButton{
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 30px;
+}
+
+.popUpFooter{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 0;
+    margin-top: 30px;
+}
+
+.edukid{
+    color: var(--orange);
+    font-family: "Lilita One", serif;
+}

@@ -10,6 +10,7 @@ export const store = new Vuex.Store({
     state: {
         user: null,
         loggedIn: false,
+        improveAccepted: false,
     },
     actions: {
         ADD_USER({ commit }, user) {
@@ -22,6 +23,10 @@ export const store = new Vuex.Store({
 
         LOGOUT({ commit }) {
             commit('SET_LOGOUT');
+        },
+
+        ACCEPT_IMPROVE({ commit }) {
+            commit('ACCEPT_IMPROVE');
         },
     },
 
@@ -38,12 +43,18 @@ export const store = new Vuex.Store({
         SET_LOGOUT(state) {
             state.user = null;
             state.loggedIn = false;
+            state.improveAccepted = false
             sessionStorage.clear();
         },
+
+        ACCEPT_IMPROVE(state){
+            state.improveAccepted = true
+        }
     },
 
     getters: {
         user: state => state.user,
         loggedIn: state => state.loggedIn,
+        improveAccepted: state => state.improveAccepted,
     },
 });
