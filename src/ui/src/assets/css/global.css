@@ -1,8 +1,11 @@
 :root {
     --dark-blue: #031737;
     --blue: #3963ad;
+    --light-blue: #5072ad;
     --orange: #ff7300;
+    --light-orange: #ff8c34;
     --quartz: rgb(167, 162, 169);
+    --basalt: rgb(157, 154, 159);
     --seasalt: #F4F7F5;
     --mint: #62A87C;
     --light-green: #7EE081;
@@ -82,7 +85,49 @@ h6{
     margin-top: 30px;
 }
 
-.edukid{
+.eduKid{
     color: var(--orange);
     font-family: "Lilita One", serif;
+}
+
+input{
+    background-color: var(--basalt);
+    border: var(--seasalt) 2px solid;
+    color: black;
+    border-radius: 15px;
+    outline: none;
+    padding: 5px 15px;
+}
+
+::-webkit-scrollbar {
+    width: 15px;
+    height: 15px;
+}
+
+/* The track (background) of the scrollbar */
+::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 30px;
+}
+
+/* The draggable thumb of the scrollbar */
+::-webkit-scrollbar-thumb {
+    background-color: var(--mint);
+    border-radius: 30px;
+}
+
+/* Change thumb color on hover */
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--light-green);
+}
+
+.loadingIcon{
+    color: var(--orange);
+    font-size: 60px;
+    font-weight: bold;
+}
+
+.loading{
+    display: flex;
+    justify-content: space-around;
 }

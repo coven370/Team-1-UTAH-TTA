@@ -3,9 +3,9 @@
     <div class="popUpContainer">
       <div class="popUp">
 <!--        <i class="el-icon-close closeButton" @click="close"></i>-->
-        <h1>Improve <span class="edukid">EduKid</span></h1>
+        <h1>Improve <span class="eduKid">EduKid</span></h1>
         <h6>
-          Thank you for your interest in helping us improve <span class="edukid">EduKid</span>!
+          Thank you for your interest in helping us improve <span class="eduKid">EduKid</span>!
         </h6>
         <p>
           Here you will see a phase or an action. Your job is to decide whether the phase/action is something that a 2nd grade would do or say. Using the buttons under each of the prompts, you can help the ai become a better and more child like 2nd grader.

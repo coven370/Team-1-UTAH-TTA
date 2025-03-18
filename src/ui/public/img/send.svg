@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="800px"
+   height="800px"
+   viewBox="0 0 28 28"
+   version="1.1"
+   id="svg9"
+   sodipodi:docname="send.svg"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs13" />
+  <sodipodi:namedview
+     id="namedview11"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     showgrid="false"
+     inkscape:zoom="1.03625"
+     inkscape:cx="366.22437"
+     inkscape:cy="399.51749"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg9" />
+  <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+  <title
+     id="title2">ic_fluent_send_28_filled</title>
+  <desc
+     id="desc4">Created with Sketch.</desc>
+  <g
+     id="🔍-Product-Icons"
+     stroke="none"
+     stroke-width="1"
+     fill="none"
+     fill-rule="evenodd"
+     style="fill:#ffffff;fill-opacity:1">
+    <g
+       id="ic_fluent_send_28_filled"
+       fill="#212121"
+       fill-rule="nonzero"
+       style="fill:#ffffff;fill-opacity:1">
+      <path
+         d="M3.78963301,2.77233335 L24.8609339,12.8499121 C25.4837277,13.1477699 25.7471402,13.8941055 25.4492823,14.5168992 C25.326107,14.7744476 25.1184823,14.9820723 24.8609339,15.1052476 L3.78963301,25.1828263 C3.16683929,25.4806842 2.42050372,25.2172716 2.12264586,24.5944779 C1.99321184,24.3238431 1.96542524,24.015685 2.04435886,23.7262618 L4.15190935,15.9983421 C4.204709,15.8047375 4.36814355,15.6614577 4.56699265,15.634447 L14.7775879,14.2474874 C14.8655834,14.2349166 14.938494,14.177091 14.9721837,14.0981464 L14.9897199,14.0353553 C15.0064567,13.9181981 14.9390703,13.8084248 14.8334007,13.7671556 L14.7775879,13.7525126 L4.57894108,12.3655968 C4.38011873,12.3385589 4.21671819,12.1952832 4.16392965,12.0016992 L2.04435886,4.22889788 C1.8627142,3.56286745 2.25538645,2.87569101 2.92141688,2.69404635 C3.21084015,2.61511273 3.51899823,2.64289932 3.78963301,2.77233335 Z"
+         id="🎨-Color"
+         style="fill:#ffffff;fill-opacity:1" />
+    </g>
+  </g>
+</svg>
