@@ -16,6 +16,7 @@
     "dotenv": "^16.4.7",
     "element-ui": "^2.15.14",
     "perfect-scrollbar": "^1.5.6",
+    "sass": "^1.84.0",
     "sass-loader": "^16.0.4",
     "vee-validate": "^2.2.15",
     "vue": "^2.6.14",
