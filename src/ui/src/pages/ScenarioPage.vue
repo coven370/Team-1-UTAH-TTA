@@ -11,14 +11,19 @@
             <i class="el-icon-loading loadingIcon"></i>
           </div>
           <div v-else>
-            <div class="user messageHeader" v-if="message.from === 'user'">User</div>
+            <div class="user messageHeader" v-if="message.from === 'user'">You</div>
             <div :class="message.from + 'Message'">
-              {{ message.id }} {{ message.message }}
+              {{ message.message }}
             </div>
             <div class="eduKid messageHeader" v-if="message.from === 'ai'">EduKid</div>
           </div>
         </div>
-        <div class="scenarioExplanation"></div>
+        <div class="d-flex justify-content-center">
+          <div class="scenarioExplanation">
+            <h4>{{scenario.name}}</h4>
+            <p>{{scenario.description}}</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -44,13 +49,18 @@ export default {
       {
         id: 1,
         from: 'ai',
-        message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...',
+        message: 'Can I chew my gum during class?',
       },
-      {
+      /*{
         id: 2,
         from: 'user',
-        message: 'User message example...',
+        message: 'No, that will distract the other students.',
       },
+      {
+        id: 3,
+        from: 'ai',
+        message: 'I promise I won\'t chew very loud!',
+      },*/
       // ... more messages
     ];
     this.messages.reverse();
@@ -58,8 +68,8 @@ export default {
   methods: {
     getScenario() {
       this.scenario = {
-        description: 'Description',
-        name: 'Name',
+        description: 'A student wants to chew gum during class',
+        name: 'Gum in Class',
       };
     },
     sendMessage() {
@@ -71,9 +81,7 @@ export default {
       this.messages.unshift(userMsg);
       this.userInput = '';
 
-      let fullText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
-
-      fullText += fullText
+      let fullText = 'I promise I won\'t chew very loud!';
 
       const aiResponse = {
         id: this.messages.length + 1,
@@ -114,6 +122,13 @@ export default {
 </script>
 
 <style scoped>
+.scenarioExplanation{
+  background-color: var(--white-green);
+  padding: 15px;
+  border-radius: 15px;
+  text-align: center;
+  width: 75%;
+}
 .scenarioContainer {
   width: 80%;
   height: 100vh;

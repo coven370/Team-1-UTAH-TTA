@@ -70,43 +70,43 @@ export default {
       this.phrases = [
         {
           id: 1,
-          phrase: "Test1",
+          phrase: "Can I read my book right now?",
         },
         {
           id: 2,
-          phrase: "Test2",
+          phrase: "Can I read my book right now?",
         },
         {
           id: 3,
-          phrase: "Test3",
+          phrase: "Can I read my book right now?",
         },
         {
           id: 4,
-          phrase: "Test4",
+          phrase: "Can I read my book right now?",
         },
         {
           id: 5,
-          phrase: "Test5",
+          phrase: "Can I read my book right now?",
         },
         {
           id: 6,
-          phrase: "Test6",
+          phrase: "Can I read my book right now?",
         },
         {
           id: 7,
-          phrase: "Test7",
+          phrase: "Can I read my book right now?",
         },
         {
           id: 8,
-          phrase: "Test8",
+          phrase: "Can I read my book right now?",
         },
         {
           id: 9,
-          phrase: "Test9",
+          phrase: "Can I read my book right now?",
         },
         {
           id: 10,
-          phrase: "Test10",
+          phrase: "Can I read my book right now?",
         },
       ]
     },
@@ -115,7 +115,7 @@ export default {
       let newId = this.phrases[this.phrases.length - 1].id +1
       let temp = {
         id: newId,
-        phrase: "Test" + newId,
+        phrase: "Can I read my book right now?",
       }
       this.phrases.push(temp)
     },
