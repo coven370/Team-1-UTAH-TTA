@@ -63,9 +63,9 @@ async def generate(prompts: Prompt):
     print(prompts)
     
     async def prompt_gen(prompts):
-        context, sources = perform_search(prompts.messages[-1], 10)
-        #We can add more cotnext to more stuff but we will figure that out later. 
-        prompts.messages[-1]['content'] = prompts.messages[-1]['content'] + f'\n CONTEXT: {context[0]} SOURCES (Make sure to repeat data sources here): {sources[0]}'
+        results = perform_search(prompts.messages[-1]['content'], 10)
+        #We can add more context to more stuff but we will figure that out later. 
+        prompts.messages[-1]['content'] = prompts.messages[-1]['content'] + f'\n RESULTS: {results}'
         stream: ChatResponse = chat(model=AI_MODEL, messages=prompts.messages, stream=True)
         
         for chunk in stream:
