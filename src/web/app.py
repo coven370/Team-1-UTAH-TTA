@@ -3,6 +3,8 @@
 #uvicorn app:app
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
+from fastapi.middleware.cors import CORSMiddleware
+
 from pydantic import BaseModel
 from typing import List, Optional, Dict
 from ollama import chat
@@ -11,6 +13,20 @@ from rag import perform_search
 import pandas as pd
 
 app = FastAPI()
+
+origins = [
+    "http://localhost",
+    "http://localhost:8000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 AI_MODEL = 'deepseek-r1:8b'
 class Prompt(BaseModel):
