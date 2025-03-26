@@ -3,9 +3,14 @@
     <div class="row fullHeight">
       <div class="col-sm-2 sidebar">
         <h1 @click="goToPage('Home', {})" class="siteLogo">EduKid</h1>
-        <div class="sidebarItem" v-for="tab of tabs" v-bind:key="tab.name" :class="[$route.name === tab.name ? 'selected' : null]" @click="goToPage(tab.name, {})">
-          <i :class="tab.icon" class="tabIcon"></i>
-          <h4 class="itemLabel">{{tab.label}}</h4>
+        <div v-for="tab of tabs" v-bind:key="tab.name">
+          <div class="sidebarItem" :class="[$route.name === tab.name ? 'selected' : null]" @click="goToPage(tab.name, {})">
+            <i :class="tab.icon" class="tabIcon"></i>
+            <h4 class="itemLabel">{{tab.label}}</h4>
+          </div>
+          <div class="children" v-for="(child, i) of tab.children" v-bind:key="i" @click="goToScenario(child)" :class="[child === selectedScenario ? 'selected' : null]">
+            <h5 class="childLabel text-center">{{child.label}}</h5>
+          </div>
         </div>
         <div class="mintCircle"></div>
         <div class="greenCircle"></div>
@@ -35,6 +40,23 @@ export default {
           label: 'Scenario',
           name: 'Scenario',
           icon: 'el-icon-data-line',
+          children: [
+            {
+              label: 'Scenario 1',
+            },
+            {
+              label: 'Scenario 2',
+            },
+            {
+              label: 'Scenario 3',
+            },
+            {
+              label: 'Scenario 4',
+            },
+            {
+              label: 'Scenario 5',
+            },
+          ],
         },
         {
           label: 'Improve',
@@ -42,6 +64,7 @@ export default {
           icon: 'el-icon-notebook-1',
         },
       ],
+      selectedScenario: null,
     }
   },
   methods: {
@@ -52,6 +75,11 @@ export default {
           params: params,
         })
       }
+      this.selectedScenario = {}
+    },
+    async goToScenario(scene){
+      await this.goToPage('Scenario', {scenario: scene})
+      this.selectedScenario = scene
     },
     logout(){
       this.$store.dispatch('LOGOUT')
@@ -94,6 +122,11 @@ export default {
 }
 .itemLabel{
   margin: 0;
+}
+.childLabel{
+  margin: 7px 0;
+  padding: 7px 0;
+  cursor: pointer;
 }
 .siteLogo{
   font-family: "Lilita One", serif;
