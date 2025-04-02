@@ -11,6 +11,7 @@ export const store = new Vuex.Store({
         user: null,
         loggedIn: false,
         improveAccepted: false,
+        scenario: {},
     },
     actions: {
         ADD_USER({ commit }, user) {
@@ -28,6 +29,10 @@ export const store = new Vuex.Store({
         ACCEPT_IMPROVE({ commit }) {
             commit('ACCEPT_IMPROVE');
         },
+
+        ADD_SCENARIO({ commit }, scenario) {
+            commit('SET_SCENARIO', scenario);
+        },
     },
 
     mutations: {
@@ -44,11 +49,16 @@ export const store = new Vuex.Store({
             state.user = null;
             state.loggedIn = false;
             state.improveAccepted = false
+            state.scenario = {}
             sessionStorage.clear();
         },
 
         ACCEPT_IMPROVE(state){
             state.improveAccepted = true
+        },
+
+        SET_SCENARIO(state, scenario){
+            state.scenario = scenario
         }
     },
 
@@ -56,5 +66,6 @@ export const store = new Vuex.Store({
         user: state => state.user,
         loggedIn: state => state.loggedIn,
         improveAccepted: state => state.improveAccepted,
+        scenario: state => state.scenario,
     },
 });

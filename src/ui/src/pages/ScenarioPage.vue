@@ -26,22 +26,45 @@
         </div>
       </div>
     </div>
+    <ScenarioOptions
+        :is-visible="optionsOpen"
+        @close="optionsOpen = false"
+    ></ScenarioOptions>
   </div>
 </template>
 
 <script>
+import ScenarioOptions from "@/components/ScenarioOptions.vue";
 export default {
   name: "ScenarioPage",
+  components: {
+    ScenarioOptions
+  },
   data() {
     return {
       userInput: '',
       messages: [],
       scenario: {},
       loading: false,
+      optionsOpen: true,
     };
   },
+  watch: {
+    "$store.getters.scenario": function() {
+      this.$nextTick(() => {
+        this.scenario = this.$store.getters.scenario
+        console.log(this.scenario)
+        if (Object.keys(this.scenario).length > 0){
+          this.optionsOpen = false
+        } else {
+          this.optionsOpen = true
+          this.getScenario()
+        }
+      })
+    }
+  },
   mounted() {
-    console.clear();
+    //console.clear();
     this.getScenario();
 
     // Prepopulate messages (for demo purposes)

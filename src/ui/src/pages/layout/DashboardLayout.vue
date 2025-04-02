@@ -68,17 +68,19 @@ export default {
     }
   },
   methods: {
-    goToPage(name, params){
+    async goToPage(name, params){
       if (this.$route.name !== name){
         this.$router.push({
-          name: name,
-          params: params,
+          name,
+          params,
         })
       }
       this.selectedScenario = {}
+      await this.$store.dispatch('ADD_SCENARIO', {})
     },
     async goToScenario(scene){
       await this.goToPage('Scenario', {scenario: scene})
+      await this.$store.dispatch('ADD_SCENARIO', scene)
       this.selectedScenario = scene
     },
     logout(){
