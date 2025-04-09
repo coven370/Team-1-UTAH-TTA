@@ -104,6 +104,7 @@ export default {
         full_name: 0,
       },
       loginData: {
+        grant_type: 'password',
         username: '',
         password: '',
       },
