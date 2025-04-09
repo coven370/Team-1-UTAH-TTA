@@ -37,7 +37,9 @@ export class CommonAPIService {
         localStorage.setItem('token' + '', response.data.access_token);
         //store.dispatch('ADD_USER', response.data.user);
         store.dispatch('SET_LOGGED_IN', true)
-        return response.data;
+        let temp = response.data
+        temp.success = true
+        return temp;
       })
       .catch((e) => {
         console.error(e)
