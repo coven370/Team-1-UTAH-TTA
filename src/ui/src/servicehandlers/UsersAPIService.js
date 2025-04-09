@@ -10,9 +10,9 @@ export class UserAPIService {
     return this.CommonAPIService.getCall(url, '', router);
   }
 
-  createUser(parms, router) {
-    const url = '/api/users';
-    return this.CommonAPIService.postCall(url, parms, router);
+  createUser(data, router) {
+    const url = '/api/v1/users/signup';
+    return this.CommonAPIService.postCall(url, data, router);
   }
 
   getUserById(user_id, router) {

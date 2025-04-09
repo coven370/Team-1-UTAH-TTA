@@ -80,6 +80,14 @@ p{
     cursor: pointer;
 }
 
+.backButton{
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 30px;
+    cursor: pointer;
+}
+
 .popUpFooter{
     width: 100%;
     display: flex;

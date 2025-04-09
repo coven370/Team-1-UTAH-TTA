@@ -35,6 +35,9 @@
 
 <script>
 import ScenarioOptions from "@/components/ScenarioOptions.vue";
+//import AIAPIService from "@/servicehandlers/AIAPIService";
+
+//const aiService = new AIAPIService()
 export default {
   name: "ScenarioPage",
   components: {
@@ -103,6 +106,8 @@ export default {
       };
       this.messages.unshift(userMsg);
       this.userInput = '';
+
+      
 
       let fullText = 'I promise I won\'t chew very loud!';
 
