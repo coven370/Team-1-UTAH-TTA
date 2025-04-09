@@ -212,15 +212,18 @@ export default {
             this.changeMode('Login')
           })
     },
-    login(){
-      console.log(this.loginData)
-      return userAPIService.CommonAPIService.login(this.loginData, this.$router, this.$store, [])
+    // When calling the login function:
+    login() {
+      console.log(this.loginData);
+      // Use spread operator to create a plain object copy of loginData
+      return userAPIService.CommonAPIService.login({ ...this.loginData }, this.$router, this.$store, [])
           .then(response => {
-            if (response && response.success){
-              this.close()
+            if (response && response.success) {
+              this.close();
             }
-          })
+          });
     },
+
   }
 };
 </script>
