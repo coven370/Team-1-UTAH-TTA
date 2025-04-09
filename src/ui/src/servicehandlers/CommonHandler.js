@@ -9,7 +9,7 @@ export class CommonAPIService {
 
   newFileCall(url, files, router) {
     const fullUrl = this.api_url + url;
-    axios.defaults.headers.common.Authorization = localStorage.getItem('jwtToken');
+    axios.defaults.headers.common.Authorization = localStorage.getItem('token');
     return axios({
       method: 'get',
       url: fullUrl,
@@ -29,11 +29,11 @@ export class CommonAPIService {
 
   // main login method for the code
   login(login, router, store, errors, jump = true) {
-    axios.defaults.headers.common.Authorization = localStorage.getItem('jwtToken');
-    return axios.post(`${this.api_url}/api/auth/login`, login)
+    axios.defaults.headers.common.Authorization = localStorage.getItem('token');
+    return axios.post(`${this.api_url}/login/access-token`, login)
       .then((response) => {
-        localStorage.setItem('jwtToken' + '', response.data.token);
-        store.dispatch('ADD_USER', response.data.user);
+        localStorage.setItem('token' + '', response.data.access_token);
+        //store.dispatch('ADD_USER', response.data.user);
         store.dispatch('SET_LOGGED_IN', true)
         return response.data;
       })
@@ -51,7 +51,7 @@ export class CommonAPIService {
   }
 
   postCall(url, parameters, router) {
-    axios.defaults.headers.common.Authorization = localStorage.getItem('jwtToken');
+    axios.defaults.headers.common.Authorization = localStorage.getItem('token');
     const fullUrl = this.api_url + url;
     return axios.post(fullUrl, parameters)
       .then((response) => {
@@ -74,7 +74,7 @@ export class CommonAPIService {
       {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Authorization': localStorage.getItem('jwtToken'),
+          'Authorization': localStorage.getItem('token'),
         }
       })
       .then((response) => {
@@ -92,7 +92,7 @@ export class CommonAPIService {
   }
 
   deleteCall(url, parameters, router) {
-    axios.defaults.headers.common.Authorization = localStorage.getItem('jwtToken');
+    axios.defaults.headers.common.Authorization = localStorage.getItem('token');
     const fullUrl = this.api_url + url;
     return axios.delete(fullUrl, parameters)
       .then(response => response.data)
@@ -106,7 +106,7 @@ export class CommonAPIService {
   }
 
   putCall(url, parameters, router) {
-    axios.defaults.headers.common.Authorization = localStorage.getItem('jwtToken');
+    axios.defaults.headers.common.Authorization = localStorage.getItem('token');
     const fullUrl = this.api_url + url;
     return axios.put(fullUrl, parameters)
       .then(response => response.data)
@@ -121,7 +121,7 @@ export class CommonAPIService {
   }
 
   getCall(url, parameters, router) {
-    axios.defaults.headers.common.Authorization = localStorage.getItem('jwtToken');
+    axios.defaults.headers.common.Authorization = localStorage.getItem('token');
     const fullUrl = this.api_url + url;
     return axios.get(fullUrl, parameters)
       .then(response => response.data)

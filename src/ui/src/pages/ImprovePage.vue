@@ -4,9 +4,9 @@
       <div class="card" id="card">
         <h3>"{{phrases[0].phrase}}"</h3>
         <div class="footer">
-          <el-button type="success" @click="processCard('keep')">Sounds like a 2nd Grader</el-button>
-          <el-button @click="processCard('shuffle')">I'm not really sure</el-button>
-          <el-button type="danger" @click="processCard('throw')">That's not a 2nd Grader</el-button>
+          <button class="successButton" @click="processCard('keep')">Sounds like a 2nd Grader</button>
+          <button @click="processCard('shuffle')">I'm not really sure</button>
+          <button class="dangerButton" @click="processCard('throw')">That's not a 2nd Grader</button>
         </div>
       </div>
       <div id="behind" class="behindContainer">
@@ -17,9 +17,9 @@
           >
             <h3 v-if="phrases.indexOf(phrase) === 1">"{{phrases[1].phrase}}"</h3>
             <div v-if="phrases.indexOf(phrase) === 1" class="footer">
-              <el-button type="success">Sounds like a 2nd Grader</el-button>
-              <el-button>I'm not really sure</el-button>
-              <el-button type="danger">That's not a 2nd Grader</el-button>
+              <button class="successButton">Sounds like a 2nd Grader</button>
+              <button>I'm not really sure</button>
+              <button class="dangerButton">That's not a 2nd Grader</button>
             </div>
           </div>
         </div>

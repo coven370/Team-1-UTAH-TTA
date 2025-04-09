@@ -25,9 +25,9 @@ export class UserAPIService {
     return this.CommonAPIService.putCall(url, parms, router);
   }
 
-  resetPassword(parms, router) {
-    const url = `/api/auth/reset`;
-    return this.CommonAPIService.postCall(url, parms, router);
+  resetPassword(email, router) {
+    const url = `/password-recovery/${email}`;
+    return this.CommonAPIService.postCall(url, email, router);
   }
 
   changePassword(parms, router) {

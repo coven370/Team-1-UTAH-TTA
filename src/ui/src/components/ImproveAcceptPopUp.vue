@@ -11,7 +11,7 @@
           Here you will see a phase or an action. Your job is to decide whether the phase/action is something that a 2nd grade would do or say. Using the buttons under each of the prompts, you can help the ai become a better and more child like 2nd grader.
         </p>
         <div class="popUpFooter">
-          <el-button type="success" @click="accept">Let Me Help Improve EduKid</el-button>
+          <button class="successButton" @click="accept">Let Me Help Improve EduKid</button>
         </div>
       </div>
     </div>

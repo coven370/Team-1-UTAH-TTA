@@ -13,6 +13,8 @@
     --light-red: #f56c6c;
     --starting-y: -57%;
     --starting-scale: 98%;
+    --red-color: #ce2415;
+    --green-color: #18b413;
 }
 
 .see{
@@ -142,4 +144,36 @@ input{
 .loading{
     display: flex;
     justify-content: space-around;
+}
+.greenText{
+    color: var(--green-color);
+}
+.redText{
+    color: var(--red-color);
+}
+.smallErrorText{
+    color: var(--red-color);
+    font-size: 12px;
+}
+
+button{
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: none;
+    font-weight: bold;
+    color: white;
+    background-color: #9d9a9f;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+button:disabled{
+    opacity: 50%;
+}
+
+.successButton{
+    background-color: var(--green-color);
+}
+.dangerButton{
+    background-color: var(--red-color);
 }
