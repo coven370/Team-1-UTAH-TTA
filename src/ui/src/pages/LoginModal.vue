@@ -64,8 +64,6 @@ export default {
         email: '',
         password: '',
         full_name: '',
-        is_active: true,
-        is_superuser: false,
       },
       userEmail: '',
     }
