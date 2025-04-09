@@ -38,7 +38,7 @@ export class CommonAPIService {
         return response.data;
       })
       .catch((e) => {
-        errors.push(e);
+        console.error(e)
         if (e.response.status === 401) {
           if (jump) {
             router.push({
