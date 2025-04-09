@@ -30,7 +30,7 @@ export class CommonAPIService {
   // main login method for the code
   login(login, router, store, errors, jump = true) {
     axios.defaults.headers.common.Authorization = localStorage.getItem('token');
-    return axios.post(`${this.api_url}/login/access-token`, login)
+    return axios.post(`${this.api_url}/login/access-token`, login.username, login.password)
       .then((response) => {
         localStorage.setItem('token' + '', response.data.access_token);
         //store.dispatch('ADD_USER', response.data.user);

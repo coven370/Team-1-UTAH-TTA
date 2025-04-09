@@ -212,6 +212,7 @@ export default {
           })
     },
     login(){
+      console.log(this.loginData)
       return userAPIService.CommonAPIService.login(this.loginData, this.$router, this.$store, [])
           .then(response => {
             if (response && response.success){
