@@ -3,6 +3,7 @@ import axios from 'axios';
 export class CommonAPIService {
   constructor() {
     this.api_url = process.env.VUE_APP_API_URL;
+    console.log(this.api_url)
     this.loggedIn = false;
   }
 

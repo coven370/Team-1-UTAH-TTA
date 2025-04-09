@@ -11,7 +11,7 @@ export class UserAPIService {
   }
 
   createUser(data, router) {
-    const url = '/api/v1/users/signup';
+    const url = '/users/signup';
     return this.CommonAPIService.postCall(url, data, router);
   }
 
