@@ -1,6 +1,6 @@
 <template>
-  <div v-if="$store.getters.loggedIn">
-<!--  <div>-->
+<!--  <div v-if="$store.getters.loggedIn">-->
+  <div>
     <div class="header">
       <h1><b>Overview</b></h1>
       <h4>User</h4>
@@ -35,7 +35,7 @@
     </div>
     <LoginModal
         :is-visible="loginOpen"
-        @close="loginOpen= false"
+        @close="loginOpen = false"
     />
   </div>
 </template>
