@@ -113,6 +113,16 @@ input{
     padding: 5px 15px;
 }
 
+select{
+    background-color: var(--basalt);
+    border: var(--seasalt) 2px solid;
+    color: black;
+    border-radius: 15px;
+    outline: none;
+    padding: 5px 15px;
+    box-sizing: border-box;
+}
+
 ::-webkit-scrollbar {
     width: 15px;
     height: 15px;
@@ -171,9 +181,24 @@ button:disabled{
     opacity: 50%;
 }
 
+.smallButton{
+    font-size: 10px;
+    padding: 7px 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    opacity: 75%;
+}
+
+.smallButton:hover{
+    opacity: 100%;
+}
+
 .successButton{
     background-color: var(--green-color);
 }
 .dangerButton{
     background-color: var(--red-color);
+}
+.primaryButton{
+    background-color: var(--blue);
 }

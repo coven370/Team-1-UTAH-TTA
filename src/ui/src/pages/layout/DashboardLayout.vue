@@ -9,7 +9,7 @@
             <h4 class="itemLabel">{{tab.label}}</h4>
           </div>
           <div class="children" v-for="(child, i) of tab.children" v-bind:key="i" @click="goToScenario(child)" :class="[child === selectedScenario ? 'selected' : null]">
-            <h5 class="childLabel text-center">{{child.label}}</h5>
+            <h6 class="childLabel text-center">{{child.label}}</h6>
           </div>
         </div>
         <div class="mintCircle"></div>
@@ -42,19 +42,19 @@ export default {
           icon: 'el-icon-data-line',
           children: [
             {
-              label: 'Scenario 1',
+              label: 'Chewing Gum in Class',
             },
             {
-              label: 'Scenario 2',
+              label: 'Crying at Recess',
             },
             {
-              label: 'Scenario 3',
+              label: 'Talks Over Teacher',
             },
             {
-              label: 'Scenario 4',
+              label: 'Defiant After Lunch',
             },
             {
-              label: 'Scenario 5',
+              label: 'Disengaged During Reading',
             },
           ],
         },

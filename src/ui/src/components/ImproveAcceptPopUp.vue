@@ -40,4 +40,9 @@ export default {
 </script>
 
 <style scoped>
+.overlay{
+  z-index: 15;
+  width: calc(100% - 16.6666% + 24px);
+  margin-left: calc(16.6666% - 12px);
+}
 </style>

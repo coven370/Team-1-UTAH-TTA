@@ -68,16 +68,16 @@ export default {
   },
   mounted() {
     //console.clear();
-    this.getScenario();
+    this.getScenario()
 
     // Prepopulate messages (for demo purposes)
-    this.messages = [
+    /*this.messages = [
       {
         id: 1,
         from: 'ai',
         message: 'Can I chew my gum during class?',
       },
-      /*{
+      {
         id: 2,
         from: 'user',
         message: 'No, that will distract the other students.',
@@ -86,17 +86,17 @@ export default {
         id: 3,
         from: 'ai',
         message: 'I promise I won\'t chew very loud!',
-      },*/
+      },
       // ... more messages
-    ];
+    ];*/
     this.messages.reverse();
   },
   methods: {
     getScenario() {
-      this.scenario = {
+      /*this.scenario = {
         description: 'A student wants to chew gum during class',
         name: 'Gum in Class',
-      };
+      };*/
     },
     sendMessage() {
       const userMsg = {
