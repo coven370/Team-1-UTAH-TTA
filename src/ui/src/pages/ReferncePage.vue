@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="scenarioContainer">
+    <div class="referenceContainer">
       <div class="inputContainer">
         <input type="text" v-model="userInput" @keyup.enter="sendMessage" :disabled="messages.some(data => data.loading)">
         <img class="sendImage" src="/img/send.svg" alt="" @click="sendMessage">
@@ -12,86 +12,46 @@
           </div>
           <div v-else>
             <div class="user messageHeader" v-if="message.from === 'user'">You</div>
-            <div :class="message.from + 'Message'">
+            <div :class="message.from + 'Message'" :id="message.id + 'message'">
               {{ message.message }}
             </div>
             <div class="eduKid messageHeader" v-if="message.from === 'ai'">EduKid</div>
           </div>
         </div>
-        <div class="d-flex justify-content-center" v-if="Object.keys(scenario).length > 0">
-          <div class="scenarioExplanation">
-            <h4>{{scenario.name}}</h4>
-            <p>{{scenario.description}}</p>
+        <div class="d-flex justify-content-center">
+          <div class="referenceExplanation">
+            <h4>Expert Reference</h4>
+            <p>Ask me anything about teaching or student behavior. I will pull for a large knowledge set on education and will think about my response before giving you an answer.</p>
           </div>
         </div>
       </div>
     </div>
-    <ScenarioOptions
-        :is-visible="optionsOpen"
-        @close="optionsOpen = false"
-    ></ScenarioOptions>
   </div>
 </template>
 
 <script>
-import ScenarioOptions from "@/components/ScenarioOptions.vue";
+import { marked } from 'marked';
 import AIAPIService from "@/servicehandlers/AIAPIService";
 
 const aiService = new AIAPIService()
 export default {
-  name: "ScenarioPage",
-  components: {
-    ScenarioOptions
-  },
+  name: "ReferencePage",
   data() {
     return {
       userInput: '',
       messages: [],
-      scenario: {},
+      reference: {},
       loading: false,
       optionsOpen: true,
       rawMessages: [],
     };
   },
-  watch: {
-    "$store.getters.scenario": function() {
-      this.$nextTick(() => {
-        this.scenario = this.$store.getters.scenario
-        this.optionsOpen = Object.keys(this.scenario).length <= 0;
-        if (!this.optionsOpen){
-          this.messages = []
-          this.rawMessages = []
-          this.getScenario()
-        }
-      })
-    }
-  },
   async mounted() {
     //console.clear();
     this.messages.reverse();
+    this.rawMessages.push({role: 'system', content: 'You are an expert in elementary education.'})
   },
   methods: {
-    async getScenario() {
-      this.rawMessages.push({role: 'system', content: this.scenario.description})
-      this.rawMessages.push({ role: 'user', content: 'Act like this student in a couple of sentences.'})
-
-      this.messages.unshift({loading: true})
-
-      let response = await aiService.sendMessage(this.rawMessages, this.$router)
-
-      let fullText = response.message.content;
-      this.rawMessages.push(response.message)
-
-      const aiResponse = {
-        id: this.messages.length + 1,
-        from: 'ai',
-        message: '',
-      };
-
-      this.messages.unshift(aiResponse);
-
-      this.typeWriterEffect(aiResponse, fullText, 3000);
-    },
     async sendMessage() {
       const userMsg = {
         id: this.messages.length + 1,
@@ -126,11 +86,12 @@ export default {
       const interval = duration / totalLetters;
 
       const timer = setInterval(() => {
-        // Append one letter at a time to the message property
         messageObj.message += fullText.charAt(currentIndex);
+
+        document.getElementById(messageObj.id + 'message').innerHTML = marked(messageObj.message);
+
         currentIndex++;
 
-        // When all letters have been added, clear the timer and turn off the loading indicator
         if (currentIndex >= totalLetters) {
           clearInterval(timer);
           for (let message of this.messages){
@@ -141,20 +102,21 @@ export default {
           }
         }
       }, interval);
-    },
+    }
+
   },
 };
 </script>
 
 <style scoped>
-.scenarioExplanation{
+.referenceExplanation{
   background-color: var(--white-green);
   padding: 15px;
   border-radius: 15px;
   text-align: center;
   width: 75%;
 }
-.scenarioContainer {
+.referenceContainer {
   width: 80%;
   height: 100vh;
   margin: auto;

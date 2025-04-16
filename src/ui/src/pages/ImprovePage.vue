@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div style="position: relative">
     <div class="cardContainer">
       <div class="card" id="card">
-        <h3>"{{phrases[0].phrase}}"</h3>
+        <h3>{{phrases[0].phrase}}</h3>
         <div class="footer">
           <button class="successButton" @click="processCard('keep')">Sounds like a 2nd Grader</button>
           <button @click="processCard('shuffle')">I'm not really sure</button>
@@ -24,6 +24,9 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="loading" v-if="phrases.length < 1">
+      <i class="el-icon-loading loadingIcon"></i>
     </div>
     <improve-accept-pop-up
         :is-visible="openAcceptPopUp"
@@ -64,7 +67,7 @@ export default {
       prompt: [
         {
           role: 'system',
-          content: 'You are an expert on 2nd grader behavior. You concise and to the point. You respond in single sentences.'
+          content: 'You are an expert on 2nd grader behavior. You respond in single sentences.'
         },
         {
           role: 'user',
@@ -74,68 +77,30 @@ export default {
     }
   },
   async mounted() {
-    console.clear()
-    this.openAcceptPopUp = !this.$store.getters.improveAccepted
-    for (let x = 0; x < 10; x++) {
-      await this.getNewPhrase(false)
-    }
-    console.log(this.phrases)
+    //console.clear()
+    this.startGetting()
   },
   methods: {
-    loadTestData(){
-      this.phrases = [
-        {
-          id: 1,
-          phrase: "Can I read my book right now?",
-        },
-        {
-          id: 2,
-          phrase: "Can I read my book right now?",
-        },
-        {
-          id: 3,
-          phrase: "Can I read my book right now?",
-        },
-        {
-          id: 4,
-          phrase: "Can I read my book right now?",
-        },
-        {
-          id: 5,
-          phrase: "Can I read my book right now?",
-        },
-        {
-          id: 6,
-          phrase: "Can I read my book right now?",
-        },
-        {
-          id: 7,
-          phrase: "Can I read my book right now?",
-        },
-        {
-          id: 8,
-          phrase: "Can I read my book right now?",
-        },
-        {
-          id: 9,
-          phrase: "Can I read my book right now?",
-        },
-        {
-          id: 10,
-          phrase: "Can I read my book right now?",
-        },
-      ]
+    async startGetting(){
+      for (let x = 0; x < 10; x++) {
+        await this.getNewPhrase(false)
+      }
     },
     async getNewPhrase(remove = true){
       if (remove){
         this.phrases.splice(0, 1)
       }
       let response = await aiService.sendMessage(this.prompt, this.$router)
-      let newId = this.phrases.length + 1
+      let newId = this.prompt.length + 1
       let temp = {
         id: newId,
         phrase: response.message.content,
       }
+      this.prompt.push(response.message)
+      this.prompt.push({
+        role: 'user',
+        content: 'Give me a new phrase or action that a 2nd grader would say or do.'
+      })
       this.phrases.push(temp)
     },
     toggleAcceptPopUp(){
@@ -189,10 +154,20 @@ export default {
 </script>
 
 <style scoped>
+.loading{
+  position: absolute;
+  width: 60px;
+  aspect-ratio: 1 / 1;
+  top: 50%;
+  left: 50%;
+  z-index: 100;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+}
 .trash{
   position: absolute;
   bottom: -10%;
-  right: -15%;
+  right: -25%;
   width: 600px;
   height: 700px;
   background-color: #7a7a7a;
@@ -290,7 +265,7 @@ export default {
   width: calc(750px * .98);
   height: calc(1500px * .98);
   top: -80%;
-  left: 0;
+  left: -20%;
   transform: rotate(50deg);
   background-color: #f4e9cd;
   position: absolute;
@@ -302,7 +277,7 @@ export default {
   width: calc(750px);
   height: calc(1500px);
   top: -80%;
-  left: 0;
+  left: -20%;
   transform: rotate(50deg);
   background-color: #ded3b8;
   position: absolute;

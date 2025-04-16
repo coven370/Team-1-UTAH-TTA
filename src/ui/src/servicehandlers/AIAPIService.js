@@ -11,7 +11,7 @@ export class UserAPIService {
   }
 
   getReference(question, router){
-    const url = `/generate/references`
+    const url = `/generate/reference`
     return this.CommonAPIService.aiCall(url, {messages: question}, router)
   }
 

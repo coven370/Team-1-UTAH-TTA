@@ -7,6 +7,7 @@ import DashboardLayout from "@/pages/layout/DashboardLayout.vue";
 import Home from '@/pages/HomePage.vue';
 import Improve from "@/pages/ImprovePage.vue";
 import Scenario from "@/pages/ScenarioPage.vue";
+import Reference from "@/pages/ReferncePage.vue";
 
 Vue.use(Router);
 
@@ -35,6 +36,11 @@ export default new Router({
                     path: 'improve',
                     name: 'ImproveAI',
                     component: Improve
+                },
+                {
+                    path: 'reference',
+                    name: 'Reference',
+                    component: Reference
                 },
             ]
         }

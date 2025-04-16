@@ -48,12 +48,17 @@ export default {
           name: 'ImproveAI',
           icon: 'el-icon-notebook-1',
         },
+        {
+          label: 'Reference',
+          name: 'Reference',
+          icon: 'el-icon-info',
+        },
       ],
       selectedScenario: null,
     }
   },
   mounted() {
-    console.clear()
+    //console.clear()
     let scenarioObject = this.tabs.find(data => data.name === 'Scenario')
     scenarioObject.children = getRandomSituations(5)
     function getRandomSituations(count = 5) {
