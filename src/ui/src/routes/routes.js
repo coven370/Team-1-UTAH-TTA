@@ -15,7 +15,7 @@ export default new Router({
     routes: [
         {
             path: '/',
-            redirect: '/dashboard/home', // Redirects to the home page inside the dashboard
+            redirect: '/dashboard/scenario', // Redirects to the home page inside the dashboard
         },
         {
             path: '/dashboard',

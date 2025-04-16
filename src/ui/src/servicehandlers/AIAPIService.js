@@ -5,9 +5,19 @@ export class UserAPIService {
     this.CommonAPIService = new CommonAPIService();
   }
 
-  sendMessage(message, router){
-    const url = `/api/generate`
-    this.CommonAPIService.postCall(url, message, router)
+  sendMessage(messages, router){
+    const url = `/generate/message`
+    return this.CommonAPIService.aiCall(url, {messages}, router)
+  }
+
+  getReference(question, router){
+    const url = `/generate/references`
+    return this.CommonAPIService.aiCall(url, {messages: question}, router)
+  }
+
+  getScenario(router){
+    const url = '/generate/scenario'
+    return this.CommonAPIService.getAICall(url, null, router)
   }
 }
 

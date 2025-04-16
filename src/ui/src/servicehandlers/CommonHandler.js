@@ -3,8 +3,7 @@ import axios from 'axios';
 export class CommonAPIService {
   constructor() {
     this.api_url = process.env.VUE_APP_API_URL;
-    console.log(this.api_url)
-    this.loggedIn = false;
+    this.llm_url = process.env.VUE_APP_LLM_URL;
   }
 
   newFileCall(url, files, router) {
@@ -58,6 +57,42 @@ export class CommonAPIService {
     axios.defaults.headers.common.Authorization = localStorage.getItem('token');
     const fullUrl = this.api_url + url;
     return axios.post(fullUrl, parameters)
+      .then((response) => {
+        // console.debug('postCall response', response);
+        return response.data
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          router.push({
+            path: '/login',
+          });
+        }
+        throw error
+      });
+  }
+
+  aiCall(url, parameters, router) {
+    axios.defaults.headers.common.Authorization = localStorage.getItem('token');
+    const fullUrl = this.llm_url + url;
+    return axios.post(fullUrl, parameters)
+      .then((response) => {
+        // console.debug('postCall response', response);
+        return response.data
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          router.push({
+            path: '/login',
+          });
+        }
+        throw error
+      });
+  }
+
+  getAICall(url, parameters, router) {
+    axios.defaults.headers.common.Authorization = localStorage.getItem('token');
+    const fullUrl = this.llm_url + url;
+    return axios.get(fullUrl, parameters)
       .then((response) => {
         // console.debug('postCall response', response);
         return response.data

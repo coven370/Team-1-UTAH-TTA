@@ -15,7 +15,7 @@
                v-for="phrase of phrases.slice(1, phrases.length - 1)" v-bind:key="phrase.id"
                :style="behindStyles(phrases.indexOf(phrase))"
           >
-            <h3 v-if="phrases.indexOf(phrase) === 1">"{{phrases[1].phrase}}"</h3>
+            <h3 v-if="phrases.indexOf(phrase) === 1">{{phrases[1].phrase}}</h3>
             <div v-if="phrases.indexOf(phrase) === 1" class="footer">
               <button class="successButton">Sounds like a 2nd Grader</button>
               <button>I'm not really sure</button>
@@ -43,6 +43,9 @@
 
 <script>
 import ImproveAcceptPopUp from "@/components/ImproveAcceptPopUp.vue";
+import AIAPIService from "@/servicehandlers/AIAPIService";
+
+const aiService = new AIAPIService()
 export default {
   name: "ImprovePage",
   components: {
@@ -57,13 +60,26 @@ export default {
         scale: 2,
         transform: 7,
         opacity: .1,
-      }
+      },
+      prompt: [
+        {
+          role: 'system',
+          content: 'You are an expert on 2nd grader behavior. You concise and to the point. You respond in single sentences.'
+        },
+        {
+          role: 'user',
+          content: 'Give me a single phrase or action that a 2nd grader would say or do.'
+        }
+      ]
     }
   },
-  mounted() {
+  async mounted() {
     console.clear()
     this.openAcceptPopUp = !this.$store.getters.improveAccepted
-    this.loadTestData()
+    for (let x = 0; x < 10; x++) {
+      await this.getNewPhrase(false)
+    }
+    console.log(this.phrases)
   },
   methods: {
     loadTestData(){
@@ -110,12 +126,15 @@ export default {
         },
       ]
     },
-    getNewPhrase(){
-      this.phrases.splice(0, 1)
-      let newId = this.phrases[this.phrases.length - 1].id +1
+    async getNewPhrase(remove = true){
+      if (remove){
+        this.phrases.splice(0, 1)
+      }
+      let response = await aiService.sendMessage(this.prompt, this.$router)
+      let newId = this.phrases.length + 1
       let temp = {
         id: newId,
-        phrase: "Can I read my book right now?",
+        phrase: response.message.content,
       }
       this.phrases.push(temp)
     },

@@ -11,7 +11,7 @@
               <label>{{section.object[key].label}}:</label>
               <input v-if="section.object[key].type === 'text'" type="text" v-model="section.object[key].value">
               <select v-else-if="section.object[key].type === 'select'" v-model="section.object[key].value">
-                <option v-for="option of section.object[key].list" v-bind:key="option.value" :value="option.value">{{option.label}}</option>
+                <option v-for="option of section.object[key].list" v-bind:key="option.value" :value="option.label">{{option.label}}</option>
               </select>
             </div>
             <div class="footer">
@@ -22,7 +22,8 @@
           </div>
         </div>
         <br>
-        <button class="successButton" @click="startScenario">Start Scenario</button>
+        <button class="primaryButton" @click="randomizeAll">Randomize All</button>
+        <button class="successButton" @click="startScenario" :disabled="!sections.some(data => Object.keys(data.object).some(item => data.object[item].value))">Start Scenario</button>
       </div>
     </div>
   </div>
@@ -238,12 +239,83 @@ export default {
 
       function getRandomElementValue(array) {
         const index = Math.floor(Math.random() * array.length);
-        return array[index].value;
+        return array[index].label;
+      }
+    },
+    randomizeAll(){
+      for (let section of this.sections){
+        this.randomizeSection(section, true)
       }
     },
     startScenario(){
+      let scenario = {
+        description: '',
+        name: 'Custom Scenario',
+      };
 
-      //send scenario to ai
+      let description = "";
+
+// Student Profile Section
+      let studentProfile = this.sections[0].object;
+      if (studentProfile.name.value) {
+        description += "Student is named " + studentProfile.name.value + ". ";
+      }
+      if (studentProfile.gradeLevel.value) {
+        description += "Grade Level: " + studentProfile.gradeLevel.value + ". ";
+      }
+      if (studentProfile.personalityTrait.value) {
+        description += "Personality is " + studentProfile.personalityTrait.value + ". ";
+      }
+      if (studentProfile.emotionalState.value) {
+        description += "Feeling " + studentProfile.emotionalState.value + ". ";
+      }
+      if (studentProfile.backgroundContext.value) {
+        description += "Background: " + studentProfile.backgroundContext.value + ". ";
+      }
+
+// Academic Context Section
+      let academicContext = this.sections[1].object;
+      if (academicContext.activity.value) {
+        description += "Activity: " + academicContext.activity.value + ". ";
+      }
+      if (academicContext.difficultyLevel.value) {
+        description += "Activity difficulty: " + academicContext.difficultyLevel.value + ". ";
+      }
+
+// Environment Factors Section
+      let environmentFactors = this.sections[2].object;
+      if (environmentFactors.classroomSettings.value) {
+        description += "Classroom is " + environmentFactors.classroomSettings.value + ". ";
+      }
+      if (environmentFactors.timeOfDay.value) {
+        description += "Time of day: " + environmentFactors.timeOfDay.value + ". ";
+      }
+      if (environmentFactors.recentClassEvent.value) {
+        description += "Recent event: " + environmentFactors.recentClassEvent.value + ". ";
+      }
+
+// Behavior Challenge Section
+      let behaviorChallenge = this.sections[3].object;
+      if (behaviorChallenge.typeOfBehavior.value) {
+        description += "Behavior: " + behaviorChallenge.typeOfBehavior.value + ". ";
+      }
+      if (behaviorChallenge.frequency.value) {
+        description += "Frequency: " + behaviorChallenge.frequency.value + ". ";
+      }
+
+// Learning Objective Section
+      let learningObjective = this.sections[4].object;
+      if (learningObjective.typeOfBehavior.value) {
+        description += "Learning objective: " + learningObjective.typeOfBehavior.value + ". ";
+      }
+      console.log(scenario.description = description)
+
+      /*let scenario = {
+        description: 'A student named James wants to chew gum during class. Act like the student',
+        name: 'Gum in Class',
+      };*/
+
+      this.$store.dispatch('ADD_SCENARIO', scenario)
 
       this.close()
     },

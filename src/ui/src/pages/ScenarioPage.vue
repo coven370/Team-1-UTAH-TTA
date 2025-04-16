@@ -2,7 +2,7 @@
   <div>
     <div class="scenarioContainer">
       <div class="inputContainer">
-        <input type="text" v-model="userInput" @keyup.enter="sendMessage">
+        <input type="text" v-model="userInput" @keyup.enter="sendMessage" :disabled="messages.some(data => data.loading)">
         <img class="sendImage" src="/img/send.svg" alt="" @click="sendMessage">
       </div>
       <div class="messagesContainer">
@@ -18,7 +18,7 @@
             <div class="eduKid messageHeader" v-if="message.from === 'ai'">EduKid</div>
           </div>
         </div>
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center" v-if="Object.keys(scenario).length > 0">
           <div class="scenarioExplanation">
             <h4>{{scenario.name}}</h4>
             <p>{{scenario.description}}</p>
@@ -35,9 +35,9 @@
 
 <script>
 import ScenarioOptions from "@/components/ScenarioOptions.vue";
-//import AIAPIService from "@/servicehandlers/AIAPIService";
+import AIAPIService from "@/servicehandlers/AIAPIService";
 
-//const aiService = new AIAPIService()
+const aiService = new AIAPIService()
 export default {
   name: "ScenarioPage",
   components: {
@@ -50,66 +50,42 @@ export default {
       scenario: {},
       loading: false,
       optionsOpen: true,
+      rawMessages: [],
     };
   },
   watch: {
     "$store.getters.scenario": function() {
       this.$nextTick(() => {
         this.scenario = this.$store.getters.scenario
-        console.log(this.scenario)
-        if (Object.keys(this.scenario).length > 0){
-          this.optionsOpen = false
-        } else {
-          this.optionsOpen = true
+        this.optionsOpen = Object.keys(this.scenario).length <= 0;
+        if (!this.optionsOpen){
+          this.messages = []
+          this.rawMessages = []
           this.getScenario()
         }
       })
     }
   },
-  mounted() {
+  async mounted() {
     //console.clear();
-    this.getScenario()
-
-    // Prepopulate messages (for demo purposes)
-    /*this.messages = [
-      {
-        id: 1,
-        from: 'ai',
-        message: 'Can I chew my gum during class?',
-      },
-      {
-        id: 2,
-        from: 'user',
-        message: 'No, that will distract the other students.',
-      },
-      {
-        id: 3,
-        from: 'ai',
-        message: 'I promise I won\'t chew very loud!',
-      },
-      // ... more messages
-    ];*/
     this.messages.reverse();
+
+    console.log(await aiService.getScenario(this.$router))
   },
   methods: {
-    getScenario() {
-      /*this.scenario = {
-        description: 'A student wants to chew gum during class',
-        name: 'Gum in Class',
-      };*/
-    },
-    sendMessage() {
-      const userMsg = {
-        id: this.messages.length + 1,
-        from: 'user',
-        message: this.userInput,
-      };
-      this.messages.unshift(userMsg);
-      this.userInput = '';
+    async getScenario() {
+      console.log(this.scenario)
+      this.rawMessages.push({role: 'system', content: this.scenario.description})
+      this.rawMessages.push({ role: 'user', content: 'Act like this student in a couple of sentences.'})
 
-      
+      this.messages.unshift({loading: true})
 
-      let fullText = 'I promise I won\'t chew very loud!';
+      let response = await aiService.sendMessage(this.rawMessages, this.$router)
+
+      console.log(response)
+
+      let fullText = response.message.content;
+      this.rawMessages.push(response.message)
 
       const aiResponse = {
         id: this.messages.length + 1,
@@ -117,7 +93,35 @@ export default {
         message: '',
       };
 
+      this.messages.unshift(aiResponse);
+
+      this.typeWriterEffect(aiResponse, fullText, 3000);
+    },
+    async sendMessage() {
+      const userMsg = {
+        id: this.messages.length + 1,
+        from: 'user',
+        message: this.userInput,
+      };
+      this.rawMessages.push({role: 'user', content: this.userInput})
+      this.messages.unshift(userMsg);
+
+      this.userInput = '';
+
       this.messages.unshift({loading: true})
+
+      let response = await aiService.sendMessage(this.rawMessages, this.$router)
+
+      console.log(response)
+
+      let fullText = response.message.content;
+      this.rawMessages.push(response.message)
+
+      const aiResponse = {
+        id: this.messages.length + 1,
+        from: 'ai',
+        message: '',
+      };
 
       this.messages.unshift(aiResponse);
 

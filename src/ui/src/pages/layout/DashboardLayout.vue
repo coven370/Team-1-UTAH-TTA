@@ -9,13 +9,13 @@
             <h4 class="itemLabel">{{tab.label}}</h4>
           </div>
           <div class="children" v-for="(child, i) of tab.children" v-bind:key="i" @click="goToScenario(child)" :class="[child === selectedScenario ? 'selected' : null]">
-            <h6 class="childLabel text-center">{{child.label}}</h6>
+            <h6 class="childLabel text-center">{{child.name}}</h6>
           </div>
         </div>
         <div class="mintCircle"></div>
         <div class="greenCircle"></div>
         <div class="footer">
-          <div class="logoutText" @click="logout">Log Out</div>
+<!--          <div class="logoutText" @click="logout">Log Out</div>-->
         </div>
       </div>
       <div class="col-sm-10 content" :class="$route.name === 'ImproveAI' ? 'circleBack' : 'cubeBack'">
@@ -26,37 +26,22 @@
 </template>
 
 <script>
+import secondGraderSituations from '/src/assets/secondGraderSituations'
 export default {
   name: "DashboardLayout",
   data(){
     return {
       tabs: [
-        {
+        /*{
           label: 'Home',
           name: 'Home',
           icon: 'el-icon-menu',
-        },
+        },*/
         {
           label: 'Scenario',
           name: 'Scenario',
           icon: 'el-icon-data-line',
-          children: [
-            {
-              label: 'Chewing Gum in Class',
-            },
-            {
-              label: 'Crying at Recess',
-            },
-            {
-              label: 'Talks Over Teacher',
-            },
-            {
-              label: 'Defiant After Lunch',
-            },
-            {
-              label: 'Disengaged During Reading',
-            },
-          ],
+          children: [],
         },
         {
           label: 'Improve',
@@ -65,6 +50,15 @@ export default {
         },
       ],
       selectedScenario: null,
+    }
+  },
+  mounted() {
+    console.clear()
+    let scenarioObject = this.tabs.find(data => data.name === 'Scenario')
+    scenarioObject.children = getRandomSituations(5)
+    function getRandomSituations(count = 5) {
+      const shuffled = [...secondGraderSituations].sort(() => Math.random() - 0.5);
+      return shuffled.slice(0, count);
     }
   },
   methods: {
