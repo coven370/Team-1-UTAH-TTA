@@ -73,7 +73,7 @@ export default {
   methods: {
     async getScenario() {
       this.rawMessages.push({role: 'system', content: this.scenario.description})
-      this.rawMessages.push({ role: 'user', content: 'Act like this student in a couple of sentences.'})
+      this.rawMessages.push({ role: 'user', content: 'Pretend to be this student in a couple of sentences. Only describe the students actions and talk as if you were the student. Ignore all other students.'})
 
       this.messages.unshift({loading: true})
 
